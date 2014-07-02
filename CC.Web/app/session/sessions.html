@@ -1,0 +1,47 @@
+﻿<section class="mainbar" data-ng-controller="sessions as vm">
+    <section class="matter">
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="form-search">
+                    <div class="btn-group pull-right">
+                        <a class="btn btn-info"
+                           data-ng-click="vm.refresh()">
+                            <i class="icon-next"></i><span>Refresh</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="widget worange">
+                    <div data-cc-widget-header title="{{vm.title}}"
+                         subtitle="{{vm.sessions.length}}"></div>
+                    <div class="widget-content user">
+                        <div class="padd" data-ng-repeat="s in vm.sessions">
+                            <div class="user">
+
+                                <img data-cc-img-person="{{s.speaker.imageSource}}"
+                                     class="img-polaroid user-pic" />
+                                <div class="user-details">
+                                    <small>{{s.timeSlot.name}}</small> at <small>{{s.room.name}}</small>
+                                    <small class="right hidden-sm">{{s.level}}</small>
+                                    <small class="right hidden-sm">{{s.track.name}}</small>
+                                    <small class="right hidden-sm">{{s.code}}</small>
+                                    <h3>{{s.title}}</h3>
+                                    <h6>{{s.speaker.fullName}}</h6>
+                                    <small class="text-subtle">{{s.tagsFormatted}}</small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="widget-foot">
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>

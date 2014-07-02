@@ -1,0 +1,14 @@
+D:\Coding\Prototypes\CC.Web\CC.Model\bin\Debug\CC.Model.dll
+D:\Coding\Prototypes\CC.Web\CC.Model\bin\Debug\CC.Model.pdb
+D:\Coding\Prototypes\CC.Web\CC.Model\bin\Debug\Newtonsoft.Json.dll
+D:\Coding\Prototypes\CC.Web\CC.Model\bin\Debug\Newtonsoft.Json.xml
+D:\Coding\Prototypes\CC.Web\CC.Model\obj\Debug\CC.Model.dll
+D:\Coding\Prototypes\CC.Web\CC.Model\obj\Debug\CC.Model.pdb
+D:\Coding\Prototypes\CC.Web\CC.Model\obj\Debug\CC.Model.csprojResolveAssemblyReference.cache
+C:\Users\kkoppineedi\Documents\GitHub\CodeCamper\CC.Model\bin\Debug\CC.Model.dll
+C:\Users\kkoppineedi\Documents\GitHub\CodeCamper\CC.Model\bin\Debug\CC.Model.pdb
+C:\Users\kkoppineedi\Documents\GitHub\CodeCamper\CC.Model\bin\Debug\Newtonsoft.Json.dll
+C:\Users\kkoppineedi\Documents\GitHub\CodeCamper\CC.Model\bin\Debug\Newtonsoft.Json.xml
+C:\Users\kkoppineedi\Documents\GitHub\CodeCamper\CC.Model\obj\Debug\CC.Model.csprojResolveAssemblyReference.cache
+C:\Users\kkoppineedi\Documents\GitHub\CodeCamper\CC.Model\obj\Debug\CC.Model.dll
+C:\Users\kkoppineedi\Documents\GitHub\CodeCamper\CC.Model\obj\Debug\CC.Model.pdb
