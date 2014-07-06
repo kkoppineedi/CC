@@ -8,7 +8,7 @@ namespace CC.DataAccess
     public class CodeCamperDbContext : DbContext 
     {
         public CodeCamperDbContext()
-            : base(nameOrConnectionString: "CodeCamper2") { }
+            : base(nameOrConnectionString: "CodeCamper") { }
 
         static CodeCamperDbContext()
         {

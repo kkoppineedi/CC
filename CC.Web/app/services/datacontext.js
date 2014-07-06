@@ -38,6 +38,8 @@
             getSpeakerPartials: getSpeakerPartials,
             getUORs: getUORs,
             getAttendees: getAttendees,
+            getAttendeeCount: getAttendeeCount,
+            getFilteredCount: getFilteredCount,
             prime: prime
         };
 
@@ -98,30 +100,97 @@
 
  
 
-        function getAttendees(forceRemote) {
+        function getAttendees(forceRemote, page, size, nameFilter) {
             var orderBy = 'firstName, lastName';
-            var attendees = [];
+            //var attendees = [];
 
+            var take = size || 20;
+            var skip = page ? (page - 1) * size : 0;
+
+            // exectued on subsequent requests
             if (_areAttendeesLoaded() && !forceRemote) {
                 // get local data
-                attendees = _getAllLocal(entityNames.attendee, orderBy);
-                return $q.when(attendees);
+               // attendees = _getAllLocal(entityNames.attendee, orderBy);
+                //return $q.when(attendees);
+
+                // code with pagination enabled
+                return $q.when(getByPage());
             }
 
             return EntityQuery.from('Persons')
                     .select('id, firstName, lastName, imageSource')
                     .orderBy(orderBy)
-                    .toType('Person')
+                    .toType(entityNames.attendee) // was 'Person'
                     .using(manager).execute()
                     .to$q(querySucceeded, _queryFailed);
 
-            function querySucceeded(data) {
-                attendees = data.results;
-                _areAttendeesLoaded(true);
-                log('Retrieved [Attendees] from remote data source', attendees.length, true);
+            function getByPage() {
+                var predicate = null;
+                // only set if a filter was passed in
+                if (nameFilter) {
+                    predicate = _fullNamePredicate(nameFilter);
+                }
+
+                var attendees = EntityQuery.from(entityNames.attendee)
+                    .where(predicate)
+                    .take(take)
+                    .skip(skip)
+                    .orderBy(orderBy)
+                    .using(manager)
+                    .executeLocally(); // synchronous because the fetch happens locally
+
                 return attendees;
             }
+
+            function querySucceeded(data) {
+                _areAttendeesLoaded(true);
+                log('Retrieved [Attendees] from remote data source', data.results.length, true);
+                return getByPage();
+            }
         }
+
+        function getAttendeeCount() {
+            // check if we have attendees
+            if (_areAttendeesLoaded()) {
+                return $q.when(_getLocalEntityCount(entityNames.attendee));
+            }
+
+            return EntityQuery.from(entityNames.attendee)
+                .using(manager)
+                .execute()
+                .to$q(_getInlineCount);
+
+            function _getLocalEntityCount(resource) {
+                var entities = EntityQuery.from(resource)
+                    .using(manager)
+                    .executeLocally();
+                return entities.length;
+            }
+            
+        }
+
+        function _getInlineCount(data) {
+            return data.inlineCount;
+        }
+
+        function getFilteredCount(nameFilter) {
+            var predicate = _fullNamePredicate(nameFilter);
+
+            var attendees = EntityQuery.from(entityNames.attendee)
+                .where(predicate)
+                .using(manager)
+                .executeLocally();
+
+            return attendees.length;
+        }
+
+        // create a predicate to filter by name
+        function _fullNamePredicate(filterValue) {
+            return breeze.Predicate
+                .create('firstName', 'contains', filterValue)
+                .or('lastName', 'contains', filterValue);
+        }
+
 
         // gets called as soon as the app starts
         function prime() {
